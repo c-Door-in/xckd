@@ -64,6 +64,8 @@ def main():
         comic_path,
         comic_title,
     )
+    
+    os.remove(comic_path)
 
 
 if __name__ == '__main__':
