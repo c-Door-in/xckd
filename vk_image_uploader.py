@@ -32,7 +32,7 @@ def get_wall_upload_server(group_id, app_access_token, version):
 
 def upload_image(url, image_path):
     logger.debug(
-        'Uploading image from %s to %s', url, image_path
+        'Uploading image from %s to %s', image_path, url
     )
     with open(image_path, 'rb') as file:
         files = {
