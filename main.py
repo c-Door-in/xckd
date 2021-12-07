@@ -1,5 +1,6 @@
 import logging
 import os
+from random import randint
 
 import requests
 from environs import Env
@@ -11,13 +12,22 @@ from vk_image_uploader import post_image
 logger = logging.getLogger('logger_main')
 
 
+def get_random_comic_number():
+    response = requests.get('https://xkcd.com/info.0.json')
+    response.raise_for_status()
+    total_comics = response['num']
+    return randint(1, total_comics)
+
+
 def parse_comic(comic_number):    
     url = f'https://xkcd.com/{comic_number}/info.0.json'
     response = requests.get(url)
+    response.raise_for_status()
     return response.json()
 
 
-def fetch_comic(local_files_dir, comic_number):
+def fetch_comic(local_files_dir):
+    comic_number = get_random_comic_number()
     logger.debug(
         'Fetching comic %s to "%s" directory', comic_number, local_files_dir
     )
@@ -34,9 +44,7 @@ def main():
         format='%(asctime)s - %(levelname)s - %(funcName)s - %(message)s',
     )
     logger.setLevel(logging.DEBUG)
-    logger.debug(
-        'Starting program'
-    )
+    logger.debug('Starting program')
 
     env = Env()
     env.read_env()
@@ -47,8 +55,7 @@ def main():
 
     os.makedirs(local_files_dir, exist_ok=True)
 
-    comic_number = '353'
-    comic_title, comic_path = fetch_comic(local_files_dir, comic_number)
+    comic_title, comic_path = fetch_comic(local_files_dir)
 
     post_image(
         vk_group_id,
