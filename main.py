@@ -6,7 +6,7 @@ import requests
 from environs import Env
 
 from file_downloader import download_image
-from vk_image_uploader import post_image
+from vk_post_image import post_image
 
 
 logger = logging.getLogger('logger_main')
@@ -15,7 +15,7 @@ logger = logging.getLogger('logger_main')
 def get_random_comic_number():
     response = requests.get('https://xkcd.com/info.0.json')
     response.raise_for_status()
-    total_comics = response['num']
+    total_comics = response.json()['num']
     return randint(1, total_comics)
 
 
@@ -44,7 +44,7 @@ def main():
         format='%(asctime)s - %(levelname)s - %(funcName)s - %(message)s',
     )
     logger.setLevel(logging.DEBUG)
-    logger.debug('Starting program')
+    logger.info('Starting program')
 
     env = Env()
     env.read_env()

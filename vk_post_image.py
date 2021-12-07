@@ -1,7 +1,8 @@
 import logging
 
 import requests
-from environs import Env
+
+from file_uploader import upload_image
 
 
 logger = logging.getLogger('logger_main')
@@ -28,20 +29,6 @@ def get_wall_upload_server(group_id, app_access_token, version):
         )
         return
     return wall_upload_server_summary['response']['upload_url']
-
-
-def upload_image(url, image_path):
-    logger.debug(
-        'Uploading image from %s to %s', image_path, url
-    )
-    with open(image_path, 'rb') as file:
-        files = {
-            'photo': file,
-        }
-        response = requests.post(url, files=files)
-        response.raise_for_status()
-    upload_summary = response.json()
-    return upload_summary
 
 
 def save_wall_photo(server, photo, hash, group_id, app_access_token, version):
@@ -91,7 +78,8 @@ def make_post(
     }
     response = requests.post(url, data=data)
     response.raise_for_status()
-    return response.text
+    logger.debug('Response is %s', response.text)
+    return response.json()['response']['post_id']
 
 
 def post_image(
@@ -127,7 +115,7 @@ def post_image(
     attachment_type = 'photo'
     attachment_owner_id = wall_photo_saving_summary['owner_id']
     attachment_media_id = wall_photo_saving_summary['id']
-    print(make_post(
+    post_id = make_post(
         vk_group_id,
         message,
         attachment_type,
@@ -135,6 +123,6 @@ def post_image(
         attachment_media_id,
         vk_app_access_token,
         vk_version,
-    ))
+    )
 
-    logger.debug('Posting complete')
+    logger.info('Posting complete. Post_id is %s', post_id)
