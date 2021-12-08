@@ -68,7 +68,7 @@ def make_post(
     method = 'wall.post'
     url = f'https://api.vk.com/method/{method}'
     attachments = f'{attach_type}{attach_owner_id}_{attach_media_id}'
-    data ={
+    data = {
         'owner_id': f'-{group_id}',
         'from_group': '1',
         'message': message,

@@ -19,7 +19,7 @@ def get_random_comic_number():
     return randint(1, total_comics)
 
 
-def parse_comic(comic_number):    
+def parse_comic(comic_number):
     url = f'https://xkcd.com/{comic_number}/info.0.json'
     response = requests.get(url)
     response.raise_for_status()
@@ -64,7 +64,7 @@ def main():
         comic_path,
         comic_title,
     )
-    
+
     os.remove(comic_path)
 
 
