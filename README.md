@@ -14,15 +14,17 @@ To use the application you need to obtain an `access token` for make posts on yo
 
 Make `.env` file at the root of the project. Put variables there (use your values):
 ```
-VK_GROUP_ID=[your public id] *You can find it at [regvk.com/id/](https://regvk.com/id/)*
+VK_GROUP_ID=[your public id]
 VK_APP_ACCESS_TOKEN=[your access token]
 VK_VERSION=[actual VK version]
 ```
+*You can find your public ID at [regvk.com/id/](https://regvk.com/id/)*
 
 You may set the name of a directory which will be created and where the comic image will save to before they upload to the VK server. After uploading, the file will be deleted.
 ```
-LOCAL_FILES_DIR=[files_dir_name] *It's "Files" by default*
+LOCAL_FILES_DIR=[files_dir_name]
 ```
+*It's "Files" by default*
 
 ## How to start
 Launch `main.py` to start:
