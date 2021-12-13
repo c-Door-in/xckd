@@ -37,7 +37,7 @@ def save_wall_photo(server, photo, hash, group_id, app_access_token, version):
     )
     method = 'photos.saveWallPhoto'
     url = f'https://api.vk.com/method/{method}'
-    data = {
+    payload = {
         'server': server,
         'photo': photo,
         'hash': hash,
@@ -45,7 +45,7 @@ def save_wall_photo(server, photo, hash, group_id, app_access_token, version):
         'access_token': app_access_token,
         'v': version,
     }
-    response = requests.post(url, data=data)
+    response = requests.post(url, data=payload)
     response.raise_for_status()
     wall_photo_saving_summary = response.json()
     return wall_photo_saving_summary['response'][0]
@@ -68,7 +68,7 @@ def make_post(
     method = 'wall.post'
     url = f'https://api.vk.com/method/{method}'
     attachments = f'{attach_type}{attach_owner_id}_{attach_media_id}'
-    data = {
+    payload = {
         'owner_id': f'-{group_id}',
         'from_group': '1',
         'message': message,
@@ -76,7 +76,7 @@ def make_post(
         'access_token': app_access_token,
         'v': version,
     }
-    response = requests.post(url, data=data)
+    response = requests.post(url, data=payload)
     response.raise_for_status()
     logger.debug('Response is %s', response.text)
     return response.json()['response']['post_id']
