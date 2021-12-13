@@ -26,16 +26,16 @@ def parse_comic(comic_number):
     return response.json()
 
 
-def fetch_comic(local_files_dir):
+def fetch_comic(files_dir):
     comic_number = get_random_comic_number()
     logger.debug(
-        'Fetching comic %s to "%s" directory', comic_number, local_files_dir
+        'Fetching comic %s to "%s" directory', comic_number, files_dir
     )
     comic_summary = parse_comic(comic_number)
     image_url = comic_summary['img']
-    local_image_path = f'{local_files_dir}/comic_{comic_number}'
-    local_image_ext_path = download_image(image_url, local_image_path)
-    return comic_summary['alt'], local_image_ext_path
+    image_path = f'{files_dir}/comic_{comic_number}'
+    image_ext_path = download_image(image_url, image_path)
+    return comic_summary['alt'], image_ext_path
 
 
 def main():
@@ -48,14 +48,14 @@ def main():
 
     env = Env()
     env.read_env()
-    local_files_dir = env.str('LOCAL_FILES_DIR', 'Files')
+    files_dir = env.str('FILES_DIR', 'Files')
     vk_app_access_token = env.str('VK_APP_ACCESS_TOKEN')
     vk_group_id = env.str('VK_GROUP_ID')
     vk_version = env.str('VK_VERSION')
 
-    os.makedirs(local_files_dir, exist_ok=True)
+    os.makedirs(files_dir, exist_ok=True)
 
-    comic_title, comic_path = fetch_comic(local_files_dir)
+    comic_title, comic_path = fetch_comic(files_dir)
 
     post_image(
         vk_group_id,
