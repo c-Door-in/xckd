@@ -15,6 +15,6 @@ def upload_image(url, image_path):
             'photo': file,
         }
         response = requests.post(url, files=files)
-        response.raise_for_status()
+    response.raise_for_status()
     upload_summary = response.json()
     return upload_summary
