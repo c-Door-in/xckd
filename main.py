@@ -1,6 +1,7 @@
 import logging
 import os
 from random import randint
+from urllib.parse import urlsplit, unquote
 
 import requests
 from environs import Env
@@ -19,23 +20,18 @@ def get_random_comic_number():
     return randint(1, total_comics)
 
 
-def parse_comic(comic_number):
+def parse_comic():
+    comic_number = get_random_comic_number()
+    logger.debug('Parsing comic %s', comic_number)
     url = f'https://xkcd.com/{comic_number}/info.0.json'
     response = requests.get(url)
-    response.raise_for_status()
+    response.raise_for_status()   
     return response.json()
 
 
-def fetch_comic(files_dir):
-    comic_number = get_random_comic_number()
-    logger.debug(
-        'Fetching comic %s to "%s" directory', comic_number, files_dir
-    )
-    comic_summary = parse_comic(comic_number)
-    image_url = comic_summary['img']
-    image_path = f'{files_dir}/comic_{comic_number}'
-    image_ext_path = download_image(image_url, image_path)
-    return comic_summary['alt'], image_ext_path
+def get_comic_image_path(image_url, files_dir):
+    path = os.path.basename(unquote(urlsplit(image_url).path))
+    return f'{files_dir}/{path}'
 
 
 def main():
@@ -55,18 +51,22 @@ def main():
 
     os.makedirs(files_dir, exist_ok=True)
 
-    comic_title, comic_path = fetch_comic(files_dir)
+    comic_summary = parse_comic()
+    comic_image_url = comic_summary['img']
+    comic_title = comic_summary['alt']
+    comic_image_path = get_comic_image_path(comic_image_url, files_dir)
 
-    post_image(
-        vk_group_id,
-        vk_app_access_token,
-        vk_version,
-        comic_path,
-        comic_title,
-    )
-
-    os.remove(comic_path)
-
+    try:
+        download_image(comic_image_url, comic_image_path)
+        post_image(
+            vk_group_id,
+            vk_app_access_token,
+            vk_version,
+            comic_image_path,
+            comic_title,
+        )
+    finally:
+        os.remove(comic_image_path)
 
 if __name__ == '__main__':
     main()
