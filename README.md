@@ -22,7 +22,7 @@ VK_VERSION=[actual VK version]
 
 You may set the name of a directory which will be created and where the comic image will save to before they upload to the VK server. After uploading, the file will be deleted.
 ```
-LOCAL_FILES_DIR=[files_dir_name]
+FILES_DIR=[files_dir_name]
 ```
 *It's "Files" by default*
 
