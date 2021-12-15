@@ -30,7 +30,7 @@ def get_wall_upload_server(group_id, app_access_token, version):
     return wall_upload_server_summary['response']['upload_url']
 
 
-def save_wall_photo(server, photo, hash, group_id, app_access_token, version):
+def save_wall_photo(server, photo, photo_hash, group_id, app_access_token, version):
     logger.debug(
         'Saving image to an album of the group %s', group_id
     )
@@ -39,7 +39,7 @@ def save_wall_photo(server, photo, hash, group_id, app_access_token, version):
     payload = {
         'server': server,
         'photo': photo,
-        'hash': hash,
+        'hash': photo_hash,
         'group_id': group_id,
         'access_token': app_access_token,
         'v': version,
