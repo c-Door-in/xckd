@@ -23,11 +23,10 @@ def get_wall_upload_server(group_id, app_access_token, version):
     response.raise_for_status()
     wall_upload_server_summary = response.json()
     if 'error' in wall_upload_server_summary:
-        print(
+        raise requests.HTTPError(
             wall_upload_server_summary['error']['error_code'],
             wall_upload_server_summary['error']['error_msg'],
         )
-        return
     return wall_upload_server_summary['response']['upload_url']
 
 
