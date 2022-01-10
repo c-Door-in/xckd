@@ -5,7 +5,7 @@ import requests
 from file_uploader import upload_image
 
 
-logger = logging.getLogger('logger_main')
+logger = logging.getLogger(__name__)
 
 
 def get_wall_upload_server(group_id, app_access_token, version):

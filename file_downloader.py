@@ -5,7 +5,7 @@ from urllib.parse import urlsplit, unquote
 import requests
 
 
-logger = logging.getLogger('logger_main')
+logger = logging.getLogger(__name__)
 
 
 def download_image(url, image_path, params={}):

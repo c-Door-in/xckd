@@ -3,7 +3,7 @@ import logging
 import requests
 
 
-logger = logging.getLogger('logger_main')
+logger = logging.getLogger(__name__)
 
 
 def upload_image(url, image_path):

@@ -10,7 +10,7 @@ from file_downloader import download_image
 from vk_post_image import post_image
 
 
-logger = logging.getLogger('logger_main')
+logger = logging.getLogger(__name__)
 
 
 def get_random_comic_number():
@@ -36,10 +36,12 @@ def get_comic_image_path(image_url, files_dir):
 
 def main():
     logging.basicConfig(
-        level=logging.ERROR,
-        format='%(asctime)s - %(levelname)s - %(funcName)s - %(message)s',
+        level=logging.DEBUG,
+        format=(
+            '%(asctime)s - %(name)s - '
+            '%(levelname)s - %(funcName)s - %(message)s'
+        ),
     )
-    logger.setLevel(logging.DEBUG)
     logger.info('Starting program')
 
     env = Env()
