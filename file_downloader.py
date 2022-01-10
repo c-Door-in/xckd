@@ -14,4 +14,3 @@ def download_image(url, image_path, params={}):
     )
     with open(image_path, 'wb') as file:
         file.write(response.content)
-    return
