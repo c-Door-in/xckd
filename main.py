@@ -51,7 +51,7 @@ def main():
 
     os.makedirs(files_dir, exist_ok=True)
 
-    comic_summary = parse_comic()
+    comic_summary = parse_random_comic()
     comic_image_url = comic_summary['img']
     comic_title = comic_summary['alt']
     comic_image_path = get_comic_image_path(comic_image_url, files_dir)
@@ -66,7 +66,8 @@ def main():
             comic_title,
         )
     finally:
-        os.remove(comic_image_path)
+        if os.path.isfile(comic_image_path):
+            os.remove(comic_image_path)
 
 if __name__ == '__main__':
     main()
