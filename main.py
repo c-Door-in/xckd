@@ -20,7 +20,7 @@ def get_random_comic_number():
     return randint(1, total_comics)
 
 
-def parse_comic():
+def parse_random_comic():
     comic_number = get_random_comic_number()
     logger.debug('Parsing comic %s', comic_number)
     url = f'https://xkcd.com/{comic_number}/info.0.json'
