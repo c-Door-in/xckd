@@ -58,20 +58,20 @@ def save_wall_photo(server, photo, photo_hash, group_id, app_access_token, versi
 def make_post(
             group_id,
             message,
-            attach_type,
-            attach_owner_id,
-            attach_media_id,
+            attachment_type,
+            attachment_owner_id,
+            attachment_media_id,
             app_access_token,
             version,
         ):
     logger.debug(
         'Making post to the wall of the group %s with attaching of the %s',
         group_id,
-        attach_type,
+        attachment_type,
     )
     method = 'wall.post'
     url = f'https://api.vk.com/method/{method}'
-    attachments = f'{attach_type}{attach_owner_id}_{attach_media_id}'
+    attachments = f'{attachment_type}{attachment_owner_id}_{attachment_media_id}'
     payload = {
         'owner_id': f'-{group_id}',
         'from_group': '1',
@@ -107,13 +107,13 @@ def post_image(
         vk_version,
     )
 
-    upload_image_summary = upload_image(wall_upload_server, image_path)
-    vk_http_error_handler(upload_image_summary)
+    uploading_image_summary = upload_image(wall_upload_server, image_path)
+    vk_http_error_handler(uploading_image_summary)
 
     wall_photo_saving_summary = save_wall_photo(
-        upload_image_summary['server'],
-        upload_image_summary['photo'],
-        upload_image_summary['hash'],
+        uploading_image_summary['server'],
+        uploading_image_summary['photo'],
+        uploading_image_summary['hash'],
         vk_group_id,
         vk_app_access_token,
         vk_version,
