@@ -22,7 +22,7 @@ def get_random_comic_number():
 
 def parse_random_comic():
     comic_number = get_random_comic_number()
-    logger.debug('Parsing comic %s', comic_number)
+    logger.info('Parsing comic %s', comic_number)
     url = f'https://xkcd.com/{comic_number}/info.0.json'
     response = requests.get(url)
     response.raise_for_status()   
@@ -36,7 +36,7 @@ def get_comic_image_path(image_url, files_dir):
 
 def main():
     logging.basicConfig(
-        level=logging.DEBUG,
+        level=logging.INFO,
         format=(
             '%(asctime)s - %(name)s - '
             '%(levelname)s - %(funcName)s - %(message)s'

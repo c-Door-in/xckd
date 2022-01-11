@@ -17,7 +17,7 @@ def vk_http_error_handler(response_summary):
 
 
 def get_wall_upload_server(group_id, app_access_token, version):
-    logger.debug(
+    logger.info(
         'Getting wall upload server for vk group %s', group_id
     )
     method = 'photos.getWallUploadServer'
@@ -35,7 +35,7 @@ def get_wall_upload_server(group_id, app_access_token, version):
 
 
 def save_wall_photo(server, photo, photo_hash, group_id, app_access_token, version):
-    logger.debug(
+    logger.info(
         'Saving image to an album of the group %s', group_id
     )
     method = 'photos.saveWallPhoto'
@@ -64,7 +64,7 @@ def make_post(
             app_access_token,
             version,
         ):
-    logger.debug(
+    logger.info(
         'Making post to the wall of the group %s with attaching of the %s',
         group_id,
         attachment_type,
@@ -95,7 +95,7 @@ def post_image(
             image_path,
             message,
         ):
-    logger.debug(
+    logger.info(
         'Posting comic from %s to vk group %s with message %s',
         image_path,
         vk_group_id,
