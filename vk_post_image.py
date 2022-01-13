@@ -8,7 +8,7 @@ from file_uploader import upload_image
 logger = logging.getLogger(__name__)
 
 
-def vk_http_error_handler(response_summary):
+def handle_vk_http_error(response_summary):
     if 'error' in response_summary:
         raise requests.HTTPError(
             response_summary['error']['error_code'],
@@ -30,7 +30,7 @@ def get_wall_upload_server(group_id, app_access_token, version):
     response = requests.get(url, params=params)
     response.raise_for_status()
     wall_upload_server_summary = response.json()
-    vk_http_error_handler(wall_upload_server_summary)
+    handle_vk_http_error(wall_upload_server_summary)
     return wall_upload_server_summary['response']['upload_url']
 
 
@@ -51,7 +51,7 @@ def save_wall_photo(server, photo, photo_hash, group_id, app_access_token, versi
     response = requests.post(url, data=payload)
     response.raise_for_status()
     wall_photo_saving_summary = response.json()
-    vk_http_error_handler(wall_photo_saving_summary)
+    handle_vk_http_error(wall_photo_saving_summary)
     return wall_photo_saving_summary['response'][0]
 
 
@@ -83,7 +83,7 @@ def make_post(
     response = requests.post(url, data=payload)
     response.raise_for_status()
     post_summary = response.json()
-    vk_http_error_handler(post_summary)
+    handle_vk_http_error(post_summary)
     logger.debug('Response is %s', response.text)
     return post_summary['response']['post_id']
 
@@ -108,7 +108,7 @@ def post_image(
     )
 
     uploading_image_summary = upload_image(wall_upload_server, image_path)
-    vk_http_error_handler(uploading_image_summary)
+    handle_vk_http_error(uploading_image_summary)
 
     wall_photo_saving_summary = save_wall_photo(
         uploading_image_summary['server'],
