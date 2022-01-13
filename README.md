@@ -10,15 +10,20 @@ Python3 should be installed already. Use command `pip` (or `pip3`, if there is a
 pip install -r requirements.txt
 ```
 ### Prepare virtual environment
-To use the application you need to obtain an `access token` for make posts on your VK public. Make sure that your access token has enough rights to publish a post with a photo on a public wall: `photos`, `groups`, `wall` and `offline`. Also, you should find out the current `VK version`. Learn more on [https://vk.com/dev](https://vk.com/dev).
+To use the application you need to obtain an `access token` for make posts on your VK public. Make sure that your access token has enough rights to publish a post with a photo on a public wall: `photos`, `groups`, `wall` and `offline`. Learn more on [https://vk.com/dev](https://vk.com/dev).
 
 Make `.env` file at the root of the project. Put variables there (use your values):
 ```
 VK_GROUP_ID=[your public id]
 VK_APP_ACCESS_TOKEN=[your access token]
-VK_VERSION=[actual VK version]
 ```
 *You can find your public ID at [regvk.com/id/](https://regvk.com/id/)*
+
+Also, you may set the newer`VK version`.
+```
+VK_VERSION=[actual VK version]
+```
+You can see the versions list at [dev.vk.com/reference/versions](https://dev.vk.com/reference/versions). The default version is 5.131.
 
 You may set the name of a directory which will be created and where the comic image will save to before they upload to the VK server. After uploading, the file will be deleted.
 ```

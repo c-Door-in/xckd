@@ -49,7 +49,7 @@ def main():
     files_dir = env.str('FILES_DIR', 'Files')
     vk_app_access_token = env.str('VK_APP_ACCESS_TOKEN')
     vk_group_id = env.str('VK_GROUP_ID')
-    vk_version = env.str('VK_VERSION')
+    vk_version = env.str('VK_VERSION', '5.131')
 
     os.makedirs(files_dir, exist_ok=True)
 
