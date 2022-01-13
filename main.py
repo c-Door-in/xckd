@@ -55,11 +55,11 @@ def main():
 
     comic_summary = parse_random_comic()
     comic_image_url = comic_summary['img']
-    comic_title = comic_summary['alt']
     comic_image_path = get_comic_image_path(comic_image_url, files_dir)
-
+    download_image(comic_image_url, comic_image_path)
+    
+    comic_title = comic_summary['alt']
     try:
-        download_image(comic_image_url, comic_image_path)
         post_image(
             vk_group_id,
             vk_app_access_token,
@@ -68,8 +68,7 @@ def main():
             comic_title,
         )
     finally:
-        if os.path.isfile(comic_image_path):
-            os.remove(comic_image_path)
+        os.remove(comic_image_path)
 
 if __name__ == '__main__':
     main()
